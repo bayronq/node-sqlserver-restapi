@@ -1,0 +1,10 @@
+@api = http://localhost:3000/api/errors
+
+{{api}}
+
+### ver errores de bancos ach
+GET http://localhost:3000/api/errors
+
+
+
+select SERVICIO, OPERACION, DATOSREQ, DATOSRESP, TIMESTAMPREQ, TIMESTAMPRESP, ESTADO from esbdb..ESB_LOGGING with (nolock) where SERVICIO = 'ACH' and OPERACION = 'ConsultarCtaTerceroExistencia' and  DATOSRESP.exist('(/Datos/status[contains(.,"408")])') = 1 AND TIMESTAMPREQ >= DATEADD(MINUTE, -10, GETDATE()) order by TIMESTAMPREQ desc
